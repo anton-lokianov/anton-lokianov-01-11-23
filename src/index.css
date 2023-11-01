@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  @apply box-border p-0 m-0;
+}
+
+body #root {
+  @apply h-screen w-full min-h-full bg-slate-100 font-serif;
+}
