@@ -43,7 +43,7 @@ const Input = ({
         placeholder={placeholder}
         value={value}
         className="px-2 py-1 w-full border rounded-md outline-none transition duration-150 ease-in-out focus:border-blue-500 
-          focus:ring focus:ring-blue-200 focus:ring-opacity-50 "
+          focus:ring focus:ring-blue-200 focus:ring-opacity-50"
       />
     </div>
   );

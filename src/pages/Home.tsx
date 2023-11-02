@@ -31,6 +31,9 @@ const Home = () => {
   const [isLoading, setIsLoading] = useState(false);
   const isDarkMode = useSelector((state: RootState) => state.ui.theme);
 
+  /**i remove the useDebounce hook that i create for the search but i will keep it in hooks folder
+   * instead i added a button for the search */
+
   const fetchWeather = async (city: string) => {
     setIsLoading(true);
     setError(null);
@@ -93,7 +96,7 @@ const Home = () => {
     <main className="py-12 flex flex-col">
       <div className="flex justify-center gap-2 items-center">
         <Input
-          className="min-w-[20rem]"
+          className="min-w-[250px]"
           icon={<AiOutlineSearch />}
           placeholder="Search for city"
           type="text"
