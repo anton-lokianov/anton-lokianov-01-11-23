@@ -7,7 +7,7 @@ import { RootState } from "../store/store";
 import Button from "./ui/Button";
 import { motion } from "framer-motion";
 import { fadeIn } from "../utils/variants";
-import React from "react";
+import React, { useState } from "react";
 
 type WeatherProps = {
   currentWeather: any;
@@ -37,7 +37,7 @@ const Weather = React.memo(({ currentWeather, forecast }: WeatherProps) => {
 
   return (
     <motion.div
-      variants={fadeIn("down", 0.1)}
+      variants={fadeIn("up", 0.1)}
       initial="hidden"
       animate={"show"}
       exit="hidden"
@@ -48,12 +48,7 @@ const Weather = React.memo(({ currentWeather, forecast }: WeatherProps) => {
             isDarkMode ? "" : "text-slate-50"
           } `}>
           <div className="flex flex-col sm:flex-row justify-between items-center">
-            <motion.div
-              variants={fadeIn("up", 0.2)}
-              initial="hidden"
-              animate={"show"}
-              exit="hidden"
-              className="flex items-center mb-4 sm:mb-0">
+            <div className="flex items-center mb-4 sm:mb-0">
               <span className="text-6xl sm:text-[8rem]">
                 <FaCity />
               </span>
@@ -65,13 +60,8 @@ const Weather = React.memo(({ currentWeather, forecast }: WeatherProps) => {
                   {roundedTemperature ? `${roundedTemperature + "°C"}` : ""}
                 </span>
               </div>
-            </motion.div>
-            <motion.div
-              variants={fadeIn("up", 0.2)}
-              initial="hidden"
-              animate={"show"}
-              exit="hidden"
-              className="flex items-center gap-5 border border-black px-2 rounded-md py-1 shadow-inner shadow-black">
+            </div>
+            <div className="flex items-center gap-5 border border-black px-2 rounded-md py-1 shadow-inner shadow-black">
               <span className="text-red-500 text-2xl sm:text-[2.7rem]">
                 <AiFillHeart />
               </span>
@@ -80,7 +70,7 @@ const Weather = React.memo(({ currentWeather, forecast }: WeatherProps) => {
                 className={isDarkMode ? "primaryBtn" : "primaryDarkBtn"}>
                 {isFavorite ? "Remove from favorites" : "Add to favorites"}
               </Button>
-            </motion.div>
+            </div>
           </div>
           <h1 className="text-2xl sm:text-[3rem] text-center">
             Scattered Clouds

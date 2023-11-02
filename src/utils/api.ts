@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const BASE_URL = "http://dataservice.accuweather.com";
-const API_KEY = "PWhg8bq3nNIT89bHPEzeS7y2nYdvTEX5";
+const API_KEY = "i8p372LM3yxIHqnPtWwQtpy4UOZMybdc";
 
 export const autocompleteLocation = async (query: string) => {
   try {

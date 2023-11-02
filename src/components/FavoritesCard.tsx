@@ -29,11 +29,12 @@ const FavoritesCard = ({ favoritesCard }: any) => {
       }
 
       dispatch(setForecast(forecastData));
+
       dispatch(setSearchQuery(favoritesCard.cityName));
 
       navigate("/");
     } catch (error) {
-      console.error(error);
+      console.error("Error in handleClick:", error);
     }
   };
 

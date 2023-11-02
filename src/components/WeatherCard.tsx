@@ -16,12 +16,7 @@ const WeatherCard = React.memo(({ forecast }: WeatherCardProps) => {
   }
 
   return (
-    <motion.div
-      variants={fadeIn("up", 0.1)}
-      initial="hidden"
-      animate={"show"}
-      exit="hidden"
-      className="grid lg:grid-cols-5 gap-4">
+    <div className="grid lg:grid-cols-5 gap-4">
       {forecast.map((item: any, idx: number) => {
         const date = new Date(item.Date).toDateString();
         const minTemperature = Math.round(item.Temperature.Minimum.Value);
@@ -43,7 +38,7 @@ const WeatherCard = React.memo(({ forecast }: WeatherCardProps) => {
           </div>
         );
       })}
-    </motion.div>
+    </div>
   );
 });
 
