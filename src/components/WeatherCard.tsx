@@ -3,12 +3,13 @@ import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { motion } from "framer-motion";
 import { fadeIn } from "../utils/variants";
+import React from "react";
 
 type WeatherCardProps = {
   forecast: any;
 };
 
-const WeatherCard = ({ forecast }: WeatherCardProps) => {
+const WeatherCard = React.memo(({ forecast }: WeatherCardProps) => {
   const isDarkMode = useSelector((state: RootState) => state.ui.theme);
   if (!forecast) {
     return null;
@@ -44,6 +45,6 @@ const WeatherCard = ({ forecast }: WeatherCardProps) => {
       })}
     </motion.div>
   );
-};
+});
 
 export default WeatherCard;

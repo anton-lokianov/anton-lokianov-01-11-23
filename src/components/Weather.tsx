@@ -7,13 +7,14 @@ import { RootState } from "../store/store";
 import Button from "./ui/Button";
 import { motion } from "framer-motion";
 import { fadeIn } from "../utils/variants";
+import React from "react";
 
 type WeatherProps = {
   currentWeather: any;
   forecast: any;
 };
 
-const Weather = ({ currentWeather, forecast }: WeatherProps) => {
+const Weather = React.memo(({ currentWeather, forecast }: WeatherProps) => {
   const roundedTemperature = Math.round(
     currentWeather?.Temperature.Metric.Value
   );
@@ -36,26 +37,23 @@ const Weather = ({ currentWeather, forecast }: WeatherProps) => {
 
   return (
     <motion.div
-      variants={fadeIn("down", 0.2)}
+      variants={fadeIn("down", 0.1)}
       initial="hidden"
       animate={"show"}
       exit="hidden"
-      className="flex justify-center mt-7 px-4"
-    >
+      className="flex justify-center mt-7 px-4">
       <div className="container mx-auto">
         <div
           className={`flex flex-col p-4 sm:p-8 md:p-12 backdrop-blur-md bg-[rgba(255,255,255,0.1)] bg-opacity-20 bg-white border border-gray-200 rounded-md shadow-lg gap-4 sm:gap-8 md:gap-20 ${
             isDarkMode ? "" : "text-slate-50"
-          } `}
-        >
+          } `}>
           <div className="flex flex-col sm:flex-row justify-between items-center">
             <motion.div
-              variants={fadeIn("up", 0.3)}
+              variants={fadeIn("up", 0.2)}
               initial="hidden"
               animate={"show"}
               exit="hidden"
-              className="flex items-center mb-4 sm:mb-0"
-            >
+              className="flex items-center mb-4 sm:mb-0">
               <span className="text-6xl sm:text-[8rem]">
                 <FaCity />
               </span>
@@ -69,19 +67,17 @@ const Weather = ({ currentWeather, forecast }: WeatherProps) => {
               </div>
             </motion.div>
             <motion.div
-              variants={fadeIn("up", 0.3)}
+              variants={fadeIn("up", 0.2)}
               initial="hidden"
               animate={"show"}
               exit="hidden"
-              className="flex items-center gap-5 border border-black px-2 rounded-md py-1 shadow-inner shadow-black"
-            >
+              className="flex items-center gap-5 border border-black px-2 rounded-md py-1 shadow-inner shadow-black">
               <span className="text-red-500 text-2xl sm:text-[2.7rem]">
                 <AiFillHeart />
               </span>
               <Button
                 onClick={handleToggleFavorite}
-                className={isDarkMode ? "primaryBtn" : "primaryDarkBtn"}
-              >
+                className={isDarkMode ? "primaryBtn" : "primaryDarkBtn"}>
                 {isFavorite ? "Remove from favorites" : "Add to favorites"}
               </Button>
             </motion.div>
@@ -94,6 +90,6 @@ const Weather = ({ currentWeather, forecast }: WeatherProps) => {
       </div>
     </motion.div>
   );
-};
+});
 
 export default Weather;

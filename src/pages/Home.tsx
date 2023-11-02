@@ -98,7 +98,6 @@ const Home = () => {
         />
       </div>
       {isLoading && <LoadingSpinner />}
-
       {!isLoading && (
         <Weather currentWeather={currentWeather} forecast={forecast} />
       )}
