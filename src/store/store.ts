@@ -10,20 +10,10 @@ const favoritesPersistConfig = {
   storage,
 };
 
-const weatherPersistConfig = {
-  key: "weather",
-  storage,
-};
-
 const uiPersistConfig = {
   key: "ui",
   storage,
 };
-
-const persistedWeatherReducer = persistReducer(
-  weatherPersistConfig,
-  weatherSlice
-);
 
 const persistedUIReducer = persistReducer(uiPersistConfig, uiSlice);
 
@@ -34,7 +24,7 @@ const persistedFavoritesReducer = persistReducer(
 
 const rootReducer = {
   favorites: persistedFavoritesReducer,
-  weather: persistedWeatherReducer,
+  weather: weatherSlice,
   ui: persistedUIReducer,
 };
 

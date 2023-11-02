@@ -10,17 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { fadeIn } from "../utils/variants";
 
-interface FavoritesCardProps {
-  city: string;
-  Temperature: {
-    Metric: {
-      Value: number;
-    };
-  };
-  WeatherText: string;
-}
-
-const FavoritesCard = ({ favoritesCard }: FavoritesCardProps) => {
+const FavoritesCard = ({ favoritesCard }: any) => {
   const isDarkMode = useSelector((state: RootState) => state.ui.theme);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -39,7 +29,7 @@ const FavoritesCard = ({ favoritesCard }: FavoritesCardProps) => {
       }
 
       dispatch(setForecast(forecastData));
-      dispatch(setSearchQuery(favoritesCard.cityName)); // Assuming you have an action to set the search query
+      dispatch(setSearchQuery(favoritesCard.cityName));
 
       navigate("/");
     } catch (error) {
@@ -49,7 +39,7 @@ const FavoritesCard = ({ favoritesCard }: FavoritesCardProps) => {
 
   return (
     <motion.div
-      variants={fadeIn("up", 0.3)}
+      variants={fadeIn("up", 0.2)}
       initial="hidden"
       animate={"show"}
       exit="hidden"
@@ -60,8 +50,7 @@ const FavoritesCard = ({ favoritesCard }: FavoritesCardProps) => {
           : "bg-blue-800 hover:shadow-white shadow-white"
       }
     transition-shadow duration-300 cursor-pointer p-6 w-[250px] h-[350px]`}
-      onClick={handleClick}
-    >
+      onClick={handleClick}>
       <div className="flex flex-col items-center gap-7">
         <div className="text-[2.2rem] font-bold">{favoritesCard?.cityName}</div>
         <div className="text-[1.4rem]">

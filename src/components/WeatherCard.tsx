@@ -16,13 +16,12 @@ const WeatherCard = ({ forecast }: WeatherCardProps) => {
 
   return (
     <motion.div
-      variants={fadeIn("up", 0.4)}
+      variants={fadeIn("up", 0.1)}
       initial="hidden"
       animate={"show"}
       exit="hidden"
-      className="grid lg:grid-cols-5 gap-4"
-    >
-      {forecast.map((item: any) => {
+      className="grid lg:grid-cols-5 gap-4">
+      {forecast.map((item: any, idx: number) => {
         const date = new Date(item.Date).toDateString();
         const minTemperature = Math.round(item.Temperature.Minimum.Value);
         const maxTemperature = Math.round(item.Temperature.Maximum.Value);
@@ -31,8 +30,7 @@ const WeatherCard = ({ forecast }: WeatherCardProps) => {
             className={`flex flex-col items-center p-4 ${
               isDarkMode ? "bg-slate-700" : "bg-blue-800"
             } rounded-md shadow-lg transition-transform transform hover:scale-105 text-slate-50`}
-            key={item.id}
-          >
+            key={idx}>
             <span className="text-md font-bold">{date}</span>
             <span className="mt-2 text-2xl text-slate-400">
               <FaCloudSun />
