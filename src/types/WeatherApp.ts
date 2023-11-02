@@ -1,10 +1,12 @@
 interface Temperature {
   Value: number;
   Unit: string;
+  UnitType: number;
 }
 
 interface WeatherCondition {
   IconPhrase: string;
+  Icon: number;
 }
 
 export interface DailyForecast {
@@ -14,6 +16,7 @@ export interface DailyForecast {
     Maximum: Temperature;
   };
   Day: WeatherCondition;
+  Night: WeatherCondition;
 }
 
 export interface CurrentWeather {
@@ -21,8 +24,10 @@ export interface CurrentWeather {
     Metric: Temperature;
   };
   cityName: string;
-}
-
-export interface Forecast {
+  id: string;
+  WeatherText: string;
+  WeatherIcon: number;
+  IsDayTime: boolean;
+  LocalObservationDateTime: string;
   DailyForecasts: DailyForecast[];
 }

@@ -7,5 +7,29 @@
 }
 
 body #root {
-  @apply h-screen w-full min-h-full bg-slate-100 font-serif;
+  @apply h-screen w-full min-h-screen bg-slate-100 font-serif;
 }
+
+.primaryBtn {
+  @apply flex items-center gap-3 bg-blue-500 px-3 py-[6px] rounded-md shadow-sm text-white 
+    transition duration-300 ease-in-out shadow-black
+  hover:bg-blue-600  active:shadow-black hover:shadow-black 
+  active:bg-blue-700 active:scale-95 active:shadow-md;
+}
+
+.primaryDarkBtn{
+  @apply flex items-center gap-3 bg-blue-700 px-3 py-[6px] rounded-md shadow-sm text-white 
+    transition duration-300 ease-in-out shadow-white
+  hover:bg-blue-800  active:shadow-white hover:shadow-white 
+  active:bg-blue-900 active:scale-95 active:shadow-md;
+}
+
+
+.nav_link {
+  @apply flex items-center gap-2 border-b-2 py-1 
+        hover:transform hover:scale-105 
+        active:scale-95  active:border-blue-500 
+        transition duration-300 ease-in-out;
+}
+
+

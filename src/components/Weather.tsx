@@ -4,6 +4,9 @@ import WeatherCard from "./WeatherCard";
 import { useDispatch, useSelector } from "react-redux";
 import { addFavorite, removeFavorite } from "../store/favorites-slice";
 import { RootState } from "../store/store";
+import Button from "./ui/Button";
+import { motion } from "framer-motion";
+import { fadeIn } from "../utils/variants";
 
 type WeatherProps = {
   currentWeather: any;
@@ -14,6 +17,8 @@ const Weather = ({ currentWeather, forecast }: WeatherProps) => {
   const roundedTemperature = Math.round(
     currentWeather?.Temperature.Metric.Value
   );
+  const isDarkMode = useSelector((state: RootState) => state.ui.theme);
+
   const dispatch = useDispatch();
   const favorites = useSelector(
     (state: RootState) => state.favorites.favorites
@@ -21,6 +26,7 @@ const Weather = ({ currentWeather, forecast }: WeatherProps) => {
   const isFavorite = favorites.some((fav) => fav.id === currentWeather?.id);
 
   const handleToggleFavorite = () => {
+    if (!currentWeather) return;
     if (isFavorite) {
       dispatch(removeFavorite(currentWeather.id));
     } else {
@@ -29,40 +35,64 @@ const Weather = ({ currentWeather, forecast }: WeatherProps) => {
   };
 
   return (
-    <div className="flex justify-center mt-7 px-4">
+    <motion.div
+      variants={fadeIn("down", 0.2)}
+      initial="hidden"
+      animate={"show"}
+      exit="hidden"
+      className="flex justify-center mt-7 px-4"
+    >
       <div className="container mx-auto">
-        <div className="flex flex-col p-12 backdrop-blur-md bg-opacity-40 bg-white border border-gray-200 rounded-md shadow-lg gap-20">
-          <div className="flex justify-between items-center">
-            <div className="flex items-center">
-              <span className="text-[8rem]">
+        <div
+          className={`flex flex-col p-4 sm:p-8 md:p-12 backdrop-blur-md bg-[rgba(255,255,255,0.1)] bg-opacity-20 bg-white border border-gray-200 rounded-md shadow-lg gap-4 sm:gap-8 md:gap-20 ${
+            isDarkMode ? "" : "text-slate-50"
+          } `}
+        >
+          <div className="flex flex-col sm:flex-row justify-between items-center">
+            <motion.div
+              variants={fadeIn("up", 0.3)}
+              initial="hidden"
+              animate={"show"}
+              exit="hidden"
+              className="flex items-center mb-4 sm:mb-0"
+            >
+              <span className="text-6xl sm:text-[8rem]">
                 <FaCity />
               </span>
               <div className="flex flex-col justify-center ml-4 gap-2">
-                <span className="text-[1.3rem]">
+                <span className="text-lg sm:text-[1.3rem]">
                   {currentWeather?.cityName}
                 </span>
-                <span className="text-[1.3rem]">{roundedTemperature}°C</span>
+                <span className="text-lg sm:text-[1.3rem]">
+                  {roundedTemperature ? `${roundedTemperature + "°C"}` : ""}
+                </span>
               </div>
-            </div>
-            <div className="flex items-center gap-5 border border-black px-2 rounded-md py-1 shadow-inner shadow-black">
-              <span className="text-red-500 lg:text-[2.7rem]">
+            </motion.div>
+            <motion.div
+              variants={fadeIn("up", 0.3)}
+              initial="hidden"
+              animate={"show"}
+              exit="hidden"
+              className="flex items-center gap-5 border border-black px-2 rounded-md py-1 shadow-inner shadow-black"
+            >
+              <span className="text-red-500 text-2xl sm:text-[2.7rem]">
                 <AiFillHeart />
               </span>
-              <button
+              <Button
                 onClick={handleToggleFavorite}
-                className="flex items-center gap-3 bg-blue-500 px-3 py-[6px] rounded-md shadow-sm text-white 
-              transition duration-300 ease-in-out 
-              hover:bg-blue-600 hover:shadow-md 
-              active:bg-blue-700 active:scale-95 active:shadow-lg">
+                className={isDarkMode ? "primaryBtn" : "primaryDarkBtn"}
+              >
                 {isFavorite ? "Remove from favorites" : "Add to favorites"}
-              </button>
-            </div>
+              </Button>
+            </motion.div>
           </div>
-          <h1 className="text-[3rem] text-center">Scattered Clouds</h1>
+          <h1 className="text-2xl sm:text-[3rem] text-center">
+            Scattered Clouds
+          </h1>
           <WeatherCard forecast={forecast} />
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

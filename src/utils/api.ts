@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const BASE_URL = "http://dataservice.accuweather.com";
-const API_KEY = "i8p372LM3yxIHqnPtWwQtpy4UOZMybdc";
+const API_KEY = "PWhg8bq3nNIT89bHPEzeS7y2nYdvTEX5";
 
 export const autocompleteLocation = async (query: string) => {
   try {
@@ -16,7 +16,7 @@ export const autocompleteLocation = async (query: string) => {
     );
     return response.data;
   } catch (err) {
-    console.log(err);
+    throw new Error("Failed to fetch location data");
   }
 };
 
@@ -32,7 +32,7 @@ export const getCurrentWeather = async (locationKey: string) => {
     );
     return response.data[0];
   } catch (err) {
-    console.log(err);
+    throw new Error("Failed to fetch current weather data");
   }
 };
 
@@ -46,9 +46,8 @@ export const get5DayForecast = async (locationKey: string) => {
         },
       }
     );
-
     return response.data.DailyForecasts;
   } catch (err) {
-    console.log(err);
+    throw new Error("Failed to fetch forecast data");
   }
 };
