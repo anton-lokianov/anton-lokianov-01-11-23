@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import ReactDOM from "react-dom";
+import Button from "./Button";
 
 type ErrorModalProps = {
   showModal: boolean;
@@ -46,19 +47,19 @@ const ErrorModal = ({ showModal, message, onClose }: ErrorModalProps) => {
             </div>
           </div>
           <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-            <button
+            <Button
               type="button"
               className={`w-full inline-flex justify-center rounded-md ${
                 isLightMode ? "border-gray-700" : "border-gray-300"
               } px-4 py-2 ${
-                isLightMode ? "bg-gray-700" : "bg-white"
+                isLightMode ? "bg-gray-700" : "bg-blue-700"
               } text-base leading-6 font-medium ${
                 isLightMode ? "text-gray-300 bg-blue-500" : "text-gray-700"
               } shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue transition ease-in-out duration-150 sm:text-sm sm:leading-5`}
               onClick={onClose}
             >
               Close
-            </button>
+            </Button>
           </div>
         </div>
       </div>

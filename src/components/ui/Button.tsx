@@ -3,6 +3,7 @@ type ButtonProps = {
   onClick: () => void;
   className?: string;
   disabled?: boolean;
+  type?: "button" | "submit" | "reset";
 };
 
 const Button = ({ children, onClick, className, disabled }: ButtonProps) => {
