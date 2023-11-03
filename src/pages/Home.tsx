@@ -78,7 +78,10 @@ const Home = () => {
     setIsLoading(true);
     setError(null);
     try {
-      const locationKey = await getLocationKeyByLatLon(latitude, longitude);
+      const { locationKey, cityName } = await getLocationKeyByLatLon(
+        latitude,
+        longitude
+      );
       const [currentWeatherData, forecastData] = await Promise.all([
         getCurrentWeather(locationKey),
         get5DayForecast(locationKey),
@@ -90,7 +93,7 @@ const Home = () => {
 
       const extendedWeatherData = {
         ...currentWeatherData,
-        cityName: "Your Location",
+        cityName: cityName,
         id: locationKey,
       };
 

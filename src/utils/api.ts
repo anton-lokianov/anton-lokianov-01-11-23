@@ -66,7 +66,10 @@ export const getLocationKeyByLatLon = async (
         },
       }
     );
-    return response.data.Key;
+    return {
+      locationKey: response.data.Key,
+      cityName: response.data.LocalizedName,
+    };
   } catch (err) {
     throw new Error("Failed to fetch location key from coordinates");
   }
