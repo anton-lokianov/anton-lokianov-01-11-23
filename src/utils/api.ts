@@ -51,3 +51,23 @@ export const get5DayForecast = async (locationKey: string) => {
     throw new Error("Failed to fetch forecast data");
   }
 };
+
+export const getLocationKeyByLatLon = async (
+  latitude: number,
+  longitude: number
+) => {
+  try {
+    const response = await axios.get(
+      `${BASE_URL}/locations/v1/cities/geoposition/search`,
+      {
+        params: {
+          apikey: API_KEY,
+          q: `${latitude},${longitude}`,
+        },
+      }
+    );
+    return response.data.Key;
+  } catch (err) {
+    throw new Error("Failed to fetch location key from coordinates");
+  }
+};

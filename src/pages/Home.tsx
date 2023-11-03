@@ -6,6 +6,7 @@ import {
   autocompleteLocation,
   get5DayForecast,
   getCurrentWeather,
+  getLocationKeyByLatLon,
 } from "../utils/api";
 import Weather from "../components/Weather";
 import {
@@ -29,10 +30,7 @@ const Home = () => {
   const [inputValue, setInputValue] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const isDarkMode = useSelector((state: RootState) => state.ui.theme);
-
-  /**i remove the useDebounce hook that i create for the search but i will keep it in hooks folder
-   * instead i added a button for the search */
+  const isLightMode = useSelector((state: RootState) => state.ui.theme);
 
   const fetchWeather = async (city: string) => {
     setIsLoading(true);
@@ -68,15 +66,68 @@ const Home = () => {
           "An unexpected error occurred while fetching weather data."
       );
       console.error("Failed to fetch weather data:", error);
-      dispatch(setSearchQuery(""));
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const fetchWeatherByLocation = async (
+    latitude: number,
+    longitude: number
+  ) => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      const locationKey = await getLocationKeyByLatLon(latitude, longitude);
+      const [currentWeatherData, forecastData] = await Promise.all([
+        getCurrentWeather(locationKey),
+        get5DayForecast(locationKey),
+      ]);
+
+      if (!currentWeatherData || !forecastData) {
+        throw new Error("Weather data is unavailable.");
+      }
+
+      const extendedWeatherData = {
+        ...currentWeatherData,
+        cityName: "Your Location",
+        id: locationKey,
+      };
+
+      dispatch(setCurrentWeather(extendedWeatherData));
+      dispatch(setForecast(forecastData));
+    } catch (error: any) {
+      setError(
+        error.message ||
+          "An unexpected error occurred while fetching weather data."
+      );
+      console.error("Failed to fetch weather data:", error);
     } finally {
       setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    const cityToFetch = searchQuery.trim() || "Tel Aviv";
-    fetchWeather(cityToFetch);
+    if (searchQuery) {
+      fetchWeather(searchQuery.trim());
+    } else {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            fetchWeatherByLocation(
+              position.coords.latitude,
+              position.coords.longitude
+            );
+          },
+          (error) => {
+            console.error(error);
+            fetchWeather("Tel Aviv");
+          }
+        );
+      } else {
+        fetchWeather("Tel Aviv");
+      }
+    }
   }, [searchQuery]);
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -104,8 +155,9 @@ const Home = () => {
           onChange={handleSearchChange}
         />
         <Button
-          className={isDarkMode ? "primaryBtn" : "primaryDarkBtn"}
-          onClick={handleSearchClick}>
+          className={isLightMode ? "primaryBtn" : "primaryDarkBtn"}
+          onClick={handleSearchClick}
+        >
           Search
         </Button>
       </div>

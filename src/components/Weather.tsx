@@ -7,7 +7,7 @@ import { RootState } from "../store/store";
 import Button from "./ui/Button";
 import { motion } from "framer-motion";
 import { fadeIn } from "../utils/variants";
-import React, { useState } from "react";
+import React from "react";
 
 type WeatherProps = {
   currentWeather: any;
@@ -18,7 +18,7 @@ const Weather = React.memo(({ currentWeather, forecast }: WeatherProps) => {
   const roundedTemperature = Math.round(
     currentWeather?.Temperature.Metric.Value
   );
-  const isDarkMode = useSelector((state: RootState) => state.ui.theme);
+  const isLightMode = useSelector((state: RootState) => state.ui.theme);
 
   const dispatch = useDispatch();
   const favorites = useSelector(
@@ -41,12 +41,14 @@ const Weather = React.memo(({ currentWeather, forecast }: WeatherProps) => {
       initial="hidden"
       animate={"show"}
       exit="hidden"
-      className="flex justify-center mt-7 px-4">
+      className="flex justify-center mt-7 px-4"
+    >
       <div className="container mx-auto">
         <div
           className={`flex flex-col p-4 sm:p-8 md:p-12 backdrop-blur-md bg-[rgba(255,255,255,0.1)] bg-opacity-20 bg-white border border-gray-200 rounded-md shadow-lg gap-4 sm:gap-8 md:gap-20 ${
-            isDarkMode ? "" : "text-slate-50"
-          } `}>
+            isLightMode ? "" : "text-slate-50"
+          } `}
+        >
           <div className="flex flex-col sm:flex-row justify-between items-center">
             <div className="flex items-center mb-4 sm:mb-0">
               <span className="text-6xl sm:text-[8rem]">
@@ -67,7 +69,8 @@ const Weather = React.memo(({ currentWeather, forecast }: WeatherProps) => {
               </span>
               <Button
                 onClick={handleToggleFavorite}
-                className={isDarkMode ? "primaryBtn" : "primaryDarkBtn"}>
+                className={isLightMode ? "primaryBtn" : "primaryDarkBtn"}
+              >
                 {isFavorite ? "Remove from favorites" : "Add to favorites"}
               </Button>
             </div>

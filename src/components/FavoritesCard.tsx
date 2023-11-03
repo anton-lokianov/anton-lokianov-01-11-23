@@ -11,7 +11,7 @@ import { motion } from "framer-motion";
 import { fadeIn } from "../utils/variants";
 
 const FavoritesCard = ({ favoritesCard }: any) => {
-  const isDarkMode = useSelector((state: RootState) => state.ui.theme);
+  const isLightMode = useSelector((state: RootState) => state.ui.theme);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -46,12 +46,13 @@ const FavoritesCard = ({ favoritesCard }: any) => {
       exit="hidden"
       className={`flex flex-col items-center justify-between  rounded-lg text-slate-100 shadow-md hover:shadow-lg 
       ${
-        isDarkMode
+        isLightMode
           ? "shadow-black hover:shadow-black bg-gray-700"
           : "bg-blue-800 hover:shadow-white shadow-white"
       }
     transition-shadow duration-300 cursor-pointer p-6 w-[250px] h-[350px]`}
-      onClick={handleClick}>
+      onClick={handleClick}
+    >
       <div className="flex flex-col items-center gap-7">
         <div className="text-[2.2rem] font-bold">{favoritesCard?.cityName}</div>
         <div className="text-[1.4rem]">

@@ -6,7 +6,7 @@ const Favorites = () => {
   const favorites = useSelector(
     (state: RootState) => state.favorites.favorites
   );
-  const isDarkMode = useSelector((state: RootState) => state.ui.theme);
+  const isLightMode = useSelector((state: RootState) => state.ui.theme);
 
   return (
     <div className="p-4">
@@ -14,7 +14,7 @@ const Favorites = () => {
         {favorites.length === 0 && (
           <h1
             className={`${
-              isDarkMode ? "" : "text-slate-50"
+              isLightMode ? "" : "text-slate-50"
             } text-[2rem] w-full text-center`}
           >
             You have no favorites yet

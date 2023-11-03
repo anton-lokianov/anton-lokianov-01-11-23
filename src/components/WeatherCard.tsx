@@ -1,8 +1,6 @@
 import { FaCloudSun } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
-import { motion } from "framer-motion";
-import { fadeIn } from "../utils/variants";
 import React from "react";
 
 type WeatherCardProps = {
@@ -10,7 +8,7 @@ type WeatherCardProps = {
 };
 
 const WeatherCard = React.memo(({ forecast }: WeatherCardProps) => {
-  const isDarkMode = useSelector((state: RootState) => state.ui.theme);
+  const isLightMode = useSelector((state: RootState) => state.ui.theme);
   if (!forecast) {
     return null;
   }
@@ -24,9 +22,10 @@ const WeatherCard = React.memo(({ forecast }: WeatherCardProps) => {
         return (
           <div
             className={`flex flex-col items-center p-4 ${
-              isDarkMode ? "bg-slate-700" : "bg-blue-800"
+              isLightMode ? "bg-slate-700" : "bg-blue-800"
             } rounded-md shadow-lg transition-transform transform hover:scale-105 text-slate-50`}
-            key={idx}>
+            key={idx}
+          >
             <span className="text-md font-bold">{date}</span>
             <span className="mt-2 text-2xl text-slate-400">
               <FaCloudSun />
