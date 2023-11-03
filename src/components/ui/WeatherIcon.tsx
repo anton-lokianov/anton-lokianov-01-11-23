@@ -28,7 +28,7 @@ const icons: IconType = {
 };
 
 const WeatherIcon = ({ icon }: { icon: number }) => {
-  const weatherIcon = icons[icon] || <TiWeatherSunny />;
+  const weatherIcon = icons[icon] || "No icon found";
   return <span className="text-2xl text-slate-400">{weatherIcon}</span>;
 };
 
