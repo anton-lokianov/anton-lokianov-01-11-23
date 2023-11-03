@@ -38,7 +38,7 @@ const Home = () => {
     try {
       const locations = await autocompleteLocation(city);
 
-      if (!locations || locations.length === 0) {
+      if (!locations) {
         throw new Error("Location not found.");
       }
 

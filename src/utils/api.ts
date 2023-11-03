@@ -16,7 +16,7 @@ export const autocompleteLocation = async (query: string) => {
     );
     return response.data;
   } catch (err) {
-    throw new Error("Failed to fetch location data");
+    throw new Error("Failed to fetch location data Please try again later");
   }
 };
 
@@ -32,7 +32,9 @@ export const getCurrentWeather = async (locationKey: string) => {
     );
     return response.data[0];
   } catch (err) {
-    throw new Error("Failed to fetch current weather data");
+    throw new Error(
+      "Failed to fetch current weather data Please try again later"
+    );
   }
 };
 
@@ -48,7 +50,7 @@ export const get5DayForecast = async (locationKey: string) => {
     );
     return response.data.DailyForecasts;
   } catch (err) {
-    throw new Error("Failed to fetch forecast data");
+    throw new Error("Failed to fetch forecast data Please try again later");
   }
 };
 
