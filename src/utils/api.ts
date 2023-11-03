@@ -73,6 +73,6 @@ export const getLocationKeyByLatLon = async (
       cityName: response.data.LocalizedName,
     };
   } catch (err) {
-    throw new Error("Failed to fetch location key from coordinates");
+    throw new Error("Failed to fetch location data Please try again later");
   }
 };
