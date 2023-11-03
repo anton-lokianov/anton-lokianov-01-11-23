@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const BASE_URL = import.meta.env.VITE_BASE_URL;
-const API_KEY = import.meta.env.VITE_API_KEY;
+const BASE_URL = "https://dataservice.accuweather.com";
+const API_KEY = "i8p372LM3yxIHqnPtWwQtpy4UOZMybdc";
 
 export const autocompleteLocation = async (query: string) => {
   try {
