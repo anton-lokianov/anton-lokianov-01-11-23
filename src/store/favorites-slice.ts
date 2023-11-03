@@ -2,10 +2,12 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface FavoritesState {
   favorites: any[];
+  selectedFavorites: any[];
 }
 
 const initialState: FavoritesState = {
   favorites: [],
+  selectedFavorites: [],
 };
 
 const favoritesSlice = createSlice({
@@ -26,8 +28,30 @@ const favoritesSlice = createSlice({
         (city) => city.id !== action.payload
       );
     },
+    removeSelectedFavorites: (state, action: PayloadAction<string[]>) => {
+      const idsToRemove = action.payload;
+      state.favorites = state.favorites.filter(
+        (city) => !idsToRemove.includes(city.id)
+      );
+      state.selectedFavorites = [];
+    },
+    toggleSelectedFavorite: (state, action: PayloadAction<string>) => {
+      const id = action.payload;
+      if (state.selectedFavorites.includes(id)) {
+        state.selectedFavorites = state.selectedFavorites.filter(
+          (favId) => favId !== id
+        );
+      } else {
+        state.selectedFavorites.push(id);
+      }
+    },
   },
 });
 
-export const { addFavorite, removeFavorite } = favoritesSlice.actions;
+export const {
+  addFavorite,
+  removeFavorite,
+  removeSelectedFavorites,
+  toggleSelectedFavorite,
+} = favoritesSlice.actions;
 export default favoritesSlice.reducer;

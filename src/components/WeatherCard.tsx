@@ -1,7 +1,7 @@
-import { FaCloudSun } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import React from "react";
+import WeatherIcon from "./ui/WeatherIcon";
 
 type WeatherCardProps = {
   forecast: any;
@@ -27,9 +27,7 @@ const WeatherCard = React.memo(({ forecast }: WeatherCardProps) => {
             key={idx}
           >
             <span className="text-md font-bold">{date}</span>
-            <span className="mt-2 text-2xl text-slate-400">
-              <FaCloudSun />
-            </span>
+            <WeatherIcon icon={item.Day.Icon} />
             <span className="mt-2">
               {minTemperature}°F / {maxTemperature}°F
             </span>
