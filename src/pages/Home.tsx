@@ -8,7 +8,7 @@ import {
   getCurrentWeather,
   getLocationKeyByLatLon,
 } from "../utils/api";
-import Weather from "../components/Weather";
+import WeatherData from "../components/WeatherData";
 import {
   setCurrentWeather,
   setForecast,
@@ -19,6 +19,7 @@ import { RootState } from "../store/store";
 import ErrorModal from "../components/ui/ErrorModal";
 import LoadingSpinner from "../components/ui/LoadingSpinner";
 
+// Main home component where users land by default
 const Home = () => {
   const dispatch = useDispatch();
   const currentWeather = useSelector(
@@ -32,6 +33,7 @@ const Home = () => {
   const [isLoading, setIsLoading] = useState(false);
   const isLightMode = useSelector((state: RootState) => state.ui.theme);
 
+  // Fetch weather data for a given city
   const fetchWeather = async (city: string) => {
     setIsLoading(true);
     setError(null);
@@ -42,6 +44,7 @@ const Home = () => {
         throw new Error("Location not found.");
       }
 
+      // Use the first suggested location's key to fetch weather data
       const locationKey = locations[0].Key;
       const [currentWeatherData, forecastData] = await Promise.all([
         getCurrentWeather(locationKey),
@@ -51,7 +54,7 @@ const Home = () => {
       if (!currentWeatherData || !forecastData) {
         throw new Error("Weather data is unavailable.");
       }
-
+      // Dispatch actions to update the Redux store with the new weather data
       const extendedWeatherData = {
         ...currentWeatherData,
         cityName: locations[0].LocalizedName,
@@ -71,6 +74,7 @@ const Home = () => {
     }
   };
 
+  // Fetch weather based on the user's current geolocation
   const fetchWeatherByLocation = async (
     latitude: number,
     longitude: number
@@ -111,6 +115,7 @@ const Home = () => {
   };
 
   useEffect(() => {
+    // Default to Tel Aviv if no search query and geolocation is not enabled
     if (searchQuery) {
       fetchWeather(searchQuery.trim());
     } else {
@@ -159,14 +164,13 @@ const Home = () => {
         />
         <Button
           className={isLightMode ? "primaryBtn" : "primaryDarkBtn"}
-          onClick={handleSearchClick}
-        >
+          onClick={handleSearchClick}>
           Search
         </Button>
       </div>
       {isLoading && <LoadingSpinner />}
       {!isLoading && (
-        <Weather currentWeather={currentWeather} forecast={forecast} />
+        <WeatherData currentWeather={currentWeather} forecast={forecast} />
       )}
       <ErrorModal
         showModal={error !== null}

@@ -12,6 +12,7 @@ import { fadeIn } from "../utils/variants";
 import Button from "./ui/Button";
 import { toggleSelectedFavorite } from "../store/favorites-slice";
 
+// Component to render a single favorite card
 const FavoritesCard = ({ favoritesCard }: any) => {
   const isLightMode = useSelector((state: RootState) => state.ui.theme);
   const dispatch = useDispatch();
@@ -25,6 +26,7 @@ const FavoritesCard = ({ favoritesCard }: any) => {
     dispatch(toggleSelectedFavorite(favoritesCard.id));
   };
 
+  // Handler for when the card is clicked, navigates to the main weather view for this location
   const handleClick = async () => {
     try {
       if (!favoritesCard.id) {
@@ -58,14 +60,13 @@ const FavoritesCard = ({ favoritesCard }: any) => {
         isLightMode
           ? "shadow-black hover:shadow-black bg-gray-700"
           : "bg-blue-800 hover:shadow-white shadow-white"
-      } transition-shadow duration-300 cursor-pointer p-6 w-[250px] h-[350px]`}
-    >
+      } transition-shadow duration-300 p-6 w-[250px] h-[350px]`}>
       <div className="absolute top-3 right-3">
         <input
           type="checkbox"
           checked={isChecked}
           onChange={handleCheckboxChange}
-          className={`form-checkbox h-5 w-5 rounded focus:ring-blue-500 ${
+          className={`form-checkbox h-5 w-5 rounded focus:ring-blue-500 cursor-pointer ${
             isLightMode
               ? "border-gray-300 text-blue-600"
               : "border-white text-slate-700"
@@ -85,8 +86,7 @@ const FavoritesCard = ({ favoritesCard }: any) => {
         <div className="flex justify-center">
           <Button
             onClick={handleClick}
-            className={isLightMode ? "primaryBtn" : "primaryDarkBtn"}
-          >
+            className={isLightMode ? "primaryBtn" : "primaryDarkBtn"}>
             see the weather
           </Button>
         </div>

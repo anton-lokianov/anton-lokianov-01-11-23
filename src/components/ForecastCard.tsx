@@ -3,11 +3,12 @@ import { RootState } from "../store/store";
 import React from "react";
 import WeatherIcon from "./ui/WeatherIcon";
 
-type WeatherCardProps = {
+type ForecastCardProps = {
   forecast: any;
 };
 
-const WeatherCard = React.memo(({ forecast }: WeatherCardProps) => {
+// Component to render the 5-day forecast for a given city
+const ForecastCard = React.memo(({ forecast }: ForecastCardProps) => {
   const isLightMode = useSelector((state: RootState) => state.ui.theme);
   if (!forecast) {
     return null;
@@ -24,8 +25,7 @@ const WeatherCard = React.memo(({ forecast }: WeatherCardProps) => {
             className={`flex flex-col items-center p-4 ${
               isLightMode ? "bg-slate-700" : "bg-blue-800"
             } rounded-md shadow-lg transition-transform transform hover:scale-105 text-slate-50`}
-            key={idx}
-          >
+            key={idx}>
             <span className="text-md font-bold">{date}</span>
             <WeatherIcon icon={item.Day.Icon} />
             <span className="mt-2">
@@ -39,4 +39,4 @@ const WeatherCard = React.memo(({ forecast }: WeatherCardProps) => {
   );
 });
 
-export default WeatherCard;
+export default ForecastCard;
