@@ -32,6 +32,27 @@ const Home = () => {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const isLightMode = useSelector((state: RootState) => state.ui.theme);
+  const [suggestions, setSuggestions] = useState([]);
+
+  const fetchAutocompleteSuggestions = async (input: string) => {
+    if (input.length < 1) {
+      setSuggestions([]);
+      return;
+    }
+
+    try {
+      const locationSuggestions = await autocompleteLocation(input);
+      setSuggestions(locationSuggestions);
+    } catch (error) {
+      setError("Failed to fetch autocomplete suggestions");
+      console.error("Autocomplete error:", error);
+    }
+  };
+
+  const selectSuggestion = (suggestion: string) => {
+    setInputValue(suggestion.LocalizedName);
+    setSuggestions([]);
+  };
 
   // Fetch weather data for a given city
   const fetchWeather = async (city: string) => {
@@ -139,13 +160,16 @@ const Home = () => {
   }, [searchQuery]);
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value);
+    const value = e.target.value;
+    setInputValue(value);
+    fetchAutocompleteSuggestions(value);
   };
 
   const handleSearchClick = () => {
     if (/^[a-zA-Z\s]*$/.test(inputValue)) {
       dispatch(setSearchQuery(inputValue));
       fetchWeather(inputValue);
+      setSuggestions([]);
     } else {
       setError("Please enter a valid city name.");
     }
@@ -154,14 +178,30 @@ const Home = () => {
   return (
     <main className="py-12 flex flex-col">
       <div className="flex justify-center gap-2 items-center">
-        <Input
-          className="min-w-[250px]"
-          icon={<AiOutlineSearch />}
-          placeholder="Search for city"
-          type="text"
-          value={inputValue}
-          onChange={handleSearchChange}
-        />
+        <div className="relative">
+          {" "}
+          {/* Wrapper div for input and suggestions */}
+          <Input
+            className="min-w-[250px]"
+            icon={<AiOutlineSearch />}
+            placeholder="Search for city"
+            type="text"
+            value={inputValue}
+            onChange={handleSearchChange}
+          />
+          {suggestions.length > 0 && (
+            <div className="absolute z-10 bg-white shadow-md max-h-60 w-full overflow-auto custom-scrollbar">
+              {suggestions.map((suggestion: any) => (
+                <div
+                  key={suggestion.Key}
+                  className="p-2 hover:bg-gray-100 cursor-pointer"
+                  onClick={() => selectSuggestion(suggestion)}>
+                  {suggestion.LocalizedName}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
         <Button
           className={isLightMode ? "primaryBtn" : "primaryDarkBtn"}
           onClick={handleSearchClick}>
@@ -169,7 +209,7 @@ const Home = () => {
         </Button>
       </div>
       {isLoading && <LoadingSpinner />}
-      {!isLoading && (
+      {!isLoading && currentWeather && (
         <WeatherData currentWeather={currentWeather} forecast={forecast} />
       )}
       <ErrorModal
