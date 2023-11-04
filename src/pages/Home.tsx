@@ -49,7 +49,7 @@ const Home = () => {
     }
   };
 
-  const selectSuggestion = (suggestion: string) => {
+  const selectSuggestion = (suggestion: any) => {
     setInputValue(suggestion.LocalizedName);
     setSuggestions([]);
   };
