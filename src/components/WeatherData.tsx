@@ -8,6 +8,7 @@ import Button from "./ui/Button";
 import { motion } from "framer-motion";
 import { fadeIn } from "../utils/variants";
 import React from "react";
+import { setTemperatureUnit } from "../store/weather-slice";
 
 type WeatherDataProps = {
   currentWeather: any;
@@ -26,6 +27,9 @@ const WeatherData = React.memo(
       (state: RootState) => state.favorites.favorites
     );
     const isFavorite = favorites.some((fav) => fav.id === currentWeather?.id);
+    const temperatureUnit = useSelector(
+      (state: RootState) => state.weather.temperatureUnit
+    );
 
     // Handler for adding or removing the current city from favorites
     const handleToggleFavorite = () => {
@@ -74,10 +78,20 @@ const WeatherData = React.memo(
                 </Button>
               </div>
             </div>
-            <h1 className="text-2xl sm:text-[3rem] text-center">
+            <h2 className="text-2xl sm:text-[3rem] text-center">
               Scattered Clouds
-            </h1>
+            </h2>
             <ForecastCard forecast={forecast} />
+            <div className="flex justify-center">
+              <Button
+                onClick={() => {
+                  dispatch(setTemperatureUnit());
+                }}
+                className={isLightMode ? "primaryBtn" : "primaryDarkBtn"}>
+                Change to{" "}
+                {temperatureUnit === "fahrenheit" ? "Celsius" : "Fahrenheit"}
+              </Button>
+            </div>
           </div>
         </div>
       </motion.div>

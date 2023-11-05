@@ -3,13 +3,15 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 interface WeatherState {
   currentWeather: any | null;
   forecast: any | null;
-  searchQuery: string | null; // New state for managing the search query
+  searchQuery: string | null;
+  temperatureUnit: "fahrenheit" | "celsius";
 }
 
 const initialState: WeatherState = {
   currentWeather: null,
   forecast: null,
-  searchQuery: null, // Initial value of the search query
+  searchQuery: null,
+  temperatureUnit: "fahrenheit",
 };
 
 export const weatherSlice = createSlice({
@@ -25,9 +27,17 @@ export const weatherSlice = createSlice({
     setSearchQuery: (state, action: PayloadAction<string | null>) => {
       state.searchQuery = action.payload;
     },
+    setTemperatureUnit: (state) => {
+      state.temperatureUnit =
+        state.temperatureUnit === "fahrenheit" ? "celsius" : "fahrenheit";
+    },
   },
 });
 
-export const { setCurrentWeather, setForecast, setSearchQuery } =
-  weatherSlice.actions;
+export const {
+  setCurrentWeather,
+  setForecast,
+  setSearchQuery,
+  setTemperatureUnit,
+} = weatherSlice.actions;
 export default weatherSlice.reducer;

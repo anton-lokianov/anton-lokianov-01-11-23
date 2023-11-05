@@ -59,7 +59,7 @@ const FavoritesCard = ({ favoritesCard }: any) => {
       className={`relative flex flex-col items-center justify-between rounded-lg text-slate-100 shadow-md hover:shadow-lg ${
         isLightMode
           ? "shadow-black hover:shadow-black bg-gray-700"
-          : "bg-blue-800 hover:shadow-white shadow-white"
+          : "bg-blue-900 hover:shadow-white shadow-white"
       } transition-shadow duration-300 p-6 w-[250px] h-[350px]`}>
       <div className="absolute top-3 right-3">
         <input
