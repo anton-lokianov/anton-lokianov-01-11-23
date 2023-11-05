@@ -16,7 +16,7 @@ export const autocompleteLocation = async (query: string) => {
     );
     return response.data;
   } catch (err) {
-    throw new Error("Failed to fetch location data Please try again later");
+    throw new Error("It seems like there is a problem with the server");
   }
 };
 
