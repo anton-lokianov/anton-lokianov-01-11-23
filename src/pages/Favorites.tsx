@@ -4,6 +4,7 @@ import { RootState } from "../store/store";
 import Button from "../components/ui/Button";
 import { removeSelectedFavorites } from "../store/favorites-slice";
 
+// Component to render the favorites page
 const Favorites = () => {
   const favorites = useSelector(
     (state: RootState) => state.favorites.favorites
@@ -24,8 +25,7 @@ const Favorites = () => {
         <div className="flex justify-center mb-6">
           <Button
             className={isLightMode ? "primaryBtn" : "primaryDarkBtn"}
-            onClick={handleRemoveSelected}
-          >
+            onClick={handleRemoveSelected}>
             Remove From Favorites
           </Button>
         </div>
@@ -35,8 +35,7 @@ const Favorites = () => {
           <h1
             className={`${
               isLightMode ? "" : "text-slate-50"
-            } text-[2rem] w-full text-center`}
-          >
+            } text-[2rem] w-full text-center`}>
             You have no favorites yet
           </h1>
         )}
